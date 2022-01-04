@@ -1,0 +1,78 @@
+
+ {% extends 'base.html'%}
+
+
+
+
+{% block content %}
+{% load static %}
+
+<div style="background: url('/media/img/images/shopp.jfif');background-repeat:no-repeat;background-size: cover;color: white;">
+
+<div class="col-md-12 divhead" style="color: black">
+		<br>
+		<center><h2>Unblock Request</h2></center>
+		<hr style="color: black">
+		<br>
+	</div>
+
+
+<div class="container">
+
+  <div class="col-md-12">
+	
+
+    <form class="form-horizontal" action='/blocked/' method="POST" id="signup-form"> 
+    {% csrf_token %}
+
+
+	<div class="col-md-12 txtboxdiv" style="background-color: white">
+
+
+	{% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+{% for us in user %}
+<br>
+		<label for="ProductName" style="color: #343a40;font-weight: bold;">Card Number</label>
+		<input type="text"  readonly="true" name="CardNumber" value=" {{us.Card_number}}" placeholder="Card Number" style="margin-top: 2px;margin-bottom: 2%;" class="form-control txtbox1">
+
+		<label for="Category"  style="color: #343a40;font-weight: bold;"> Cvv </label>
+		 <input type="text" name="Cvv"  readonly="true" value=" {{us.cvv}}" placeholder="Cvv" style="margin-top: 2px;margin-bottom: 2%;" class="form-control txtbox1">
+		  
+		 <label for="costsds"  style="color: #343a40;font-weight: bold;">Issue</label>
+		 <textarea name="Issue" placeholder="Issue" class="form-control " style="height:150px;"></textarea>
+		 <br>
+		  
+		 <label for="cost"  style="color: #343a40;font-weight: bold;">Uid</label>
+		 <input type="text"  readonly="true" name="Uid" value="{{us.id}}" placeholder="Uid"style="margin-top: 2px;margin-bottom: 2%;" class="form-control txtbox1">
+		 {% endfor%}
+<br>
+
+
+	<div class="col-md-12 btndiv text-center">
+		
+	<button type="submit" class="btn btn-success">Request</button>
+		<br><br>
+	</div>
+
+	</div>
+	
+    </form>
+
+
+	<div class="col-md-12 divsign">
+	<div class="col-md-8 paddn">
+			<br><br>
+	</div>
+	
+	</div>
+  </div>
+
+</div>
+</div>
+{% endblock %}

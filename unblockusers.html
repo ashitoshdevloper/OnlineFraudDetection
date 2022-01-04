@@ -1,0 +1,64 @@
+
+ {% extends 'base.html'%}
+
+
+
+
+{% block content %}
+
+<div style="background: url('/media/img/images/admin.jpg');background-repeat:no-repeat;background-size: cover;color: white;height: 841px">
+
+<div class="col-md-12 divhead" style="color: black">
+		<br>
+		<center><h2>Blocked Request</h2></center>
+		<hr style="color: black">
+		<br>
+	</div>
+
+
+{% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+<form id="CartDetails" method="POST" class="post-form" action="/addtocart/">  
+        {% csrf_token %}  
+<center>
+<div class="container-fluid" style="margin-top: 1%;padding:5%">	
+	
+	<table class="table table-striped table-bordered table-sm" >  
+    <thead class="thead-dark" style="background-color: black;color: white ;height: 400px">  
+    <tr>  
+    	 
+        <th>User id</th>  
+        <th>Card Number</th>  
+        <th>Cvv</th>  
+        <th>Issue</th>  
+        <th>Update Status</th> 
+    </tr>  
+    </thead>  
+    <tbody style="background-color: white;color: black"> 
+
+	{% for or in Order %}  
+		<tr>  
+	        <td>{{ or.id }}</td> 
+	        <td>{{ or.Card_number }}</td>  
+	        <td>{{ or.cvv }}</td>  
+	        <th>{{ or.Issue }}</th>  
+	         
+	        <td>   
+	            <a href="/unblock/{{ or.id }}">Unblock</a>  
+	        </td>  
+		</tr> 
+	{% endfor %} 
+
+    </tbody>  
+	</table>
+</div>
+</center>
+</form>
+</div>
+{% endblock %}

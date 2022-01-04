@@ -1,0 +1,92 @@
+
+ {% extends 'base.html'%}
+
+
+
+
+
+{% block content %}
+{% load static %}
+
+{% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+<div style="background: url('/media/img/images/admin.jpg'); background-repeat:no-repeat;background-size:cover; height: 541px;width: 100%  ">
+
+
+  <div class="col-md-12 ">
+  <div class="col-md-12 divhead">
+    <center><h1>Products Details</h1></center>
+    <hr>
+    <br>
+  </div>
+
+<form id="productDetails" method="POST" class="post-form" action="/productdetails/{{product.id}}">  
+        {% csrf_token %}  
+
+<div class="container">
+<div class="row">
+
+
+  <div class="col-md-6" style="width:41%;margin:1%">
+    <div class="card-body">
+    <img class="card-img-top " src="{{product.image.url}}" alt="Card image" style="height: 100%;width:100%;">
+    <!--<img class="card-img-top " src="{{product.image.url}}" alt="Card image" style="height: 100%;width:100%;">-->
+    </div>
+  </div>
+
+  <div class="col-md-6" style="width:55%;padding: 1%;margin:1%">
+    <div class="card-body">
+
+    <input type="hidden" name="uid" value="{{user.id}}">    
+    <input type="hidden" name="pid" value="{{product.Pid}}">
+    <input type="hidden" name="pname" value="{{product.pname}}">
+    <input type="hidden" name="pcost" value="{{product.cost}}">
+    <input type="hidden" name="pdesc" value="{{product.desc}}">
+    <input type="hidden" name="category" value="{{product.subcategory}}">
+
+
+      Name : <label style="font-size: xx-large;color: red ; font-weight: bold;background-color: white" name="product_name" value="{{product.pname}}">{{product.pname}}</label>
+      <br> <br>
+      Cost : <label style="font-size: x-large;background-color: white" name="cost">₹{{product.cost}}</label>
+      <br> <br>
+       Desc : <label style="font-size: small;background-color: white" name="desc">{{product.desc}}</label>
+       <br> <br>
+       {% if  request.session.type_id == 'Admin' %}
+     {% else %}
+       Quantity :<input type="number" required="" name="Quantity" id="Quantity" onchange="validate()" style="margin-top: 2px;margin-bottom: 2%;" placeholder="Quantity" value="1" class="form-control txtbox1">
+       <br>
+      
+<button type="submit"  style="display: flow-root;background-color: #de0808; width: 100%"  class="btn btn-primary text-center">Add To Cart</button>
+  {% endif %}
+<br>
+      <!--<a href="/addtocart/{{ product.id }}" style="display: flow-root;background-color: #de0808;" class="btn btn-primary text-center">Add To Cart</a>-->
+    </div>
+  </div> 
+</div>
+<br>
+</div>
+</form> 
+
+
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+  function validate()
+  {
+    if(document.getElementById("Quantity").value < 1)
+    {
+      document.getElementById("Quantity").value = 1;
+    }
+  }
+</script>
+{% endblock %}
+

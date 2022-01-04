@@ -1,0 +1,78 @@
+
+ {% extends 'base.html'%}
+
+
+
+
+
+{% block content %}
+{% load static %}
+{% static "images" as baseUrl%}
+
+
+<div style="background: url('/media/img/images/admin.jpg');background-repeat:no-repeat;background-size: cover;">
+
+
+	<div class="col-md-12 divhead">
+		<br>
+		<center><h1>Products</h1></center>
+		<hr>
+		<br>
+	</div>
+{% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+
+
+ <form method="POST" class="post-form" action="/productdetails/{{product.id}}">  
+        {% csrf_token %}  
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+{% for product in products %}
+<div class="col-md-3">
+  <div class="card" style="padding: 2%;margin:2%;background-color: white">
+    <img class="card-img-top " src="{{product.image.url}}" alt="Card image" style="height: 300px;width:100%;">
+    <div class="card-body">
+      <h6 class="card-title" style="height: 30px">{{product.pname}}</h6>
+      <p style="font-size: small;height: 30px" class="card-text  P_{{ product.id }}">{{product.desc}}</p>
+
+      <a href="/productdetails/{{ product.id }}" style="display: flow-root;background-color: #343a40;" class="btn btn-primary stretched-link text-center">View Products</a>
+    </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+  
+  var name = $('.P_{{ product.id }}').text();
+  if (name.length > 0) 
+  {
+      var shortname = name.substring(0, 70) + " ...";
+      $('.P_{{ product.id }}').text(shortname) ;
+  }
+
+
+</script>
+
+
+
+{% endfor %}
+</div>
+</div>
+</div>
+
+</form> 
+
+<br><br>
+
+
+</div>
+
+{% endblock %}
